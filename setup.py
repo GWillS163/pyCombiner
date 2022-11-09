@@ -9,7 +9,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pyCombiner',
-    version="0.0.1",
+    version="0.0.2",
     description=(
         'Combine that all your python files in your project sequential into one by the relationship of import statement. '
     ),

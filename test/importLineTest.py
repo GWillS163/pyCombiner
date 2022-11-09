@@ -24,9 +24,9 @@ def singleLineParseTest():
 
 
 def singlePyTest(path):
-    from src import parseFile
-    from src import parseSinglePy
-    from src import showRests
+    from pyCombiner import parseFile
+    from pyCombiner import parseSinglePy
+    from pyCombiner import showRests
 
     lines = parseFile(path)
     importModules, fromModules, otherLines = parseSinglePy(lines)

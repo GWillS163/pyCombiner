@@ -7,7 +7,7 @@
 # TODO: as xx 这种语法解析不了
 import os
 
-from src.osFileOpr import parseFile
+from pyCombiner.osFileOpr import parseFile
 
 
 def isModuleExist(moduleName):

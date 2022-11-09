@@ -8,14 +8,14 @@
 
 import sys
 import os.path
-from src.main import main
+from pyCombiner.main import main
 
 
 print("Welcome to use the CLI of PyCombine! 0.0.1\n")
 
 if len(sys.argv) == 1:
     print("Please input the entrance file path.\n"
-          "For example: pyCombiner ./src/main.py")
+          "For example: pyCombiner ./pyCombiner/main.py")
     sys.exit(0)
 
 entrancePath = sys.argv[1]

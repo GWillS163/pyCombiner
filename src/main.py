@@ -1,0 +1,69 @@
+# Github: GWillS163
+# User: 駿清清 
+# Date: 01/11/2022 
+# Time: 20:20
+import os.path
+
+from src.echo import showMainRests
+from lineParse import *
+from osFileOpr import *
+from parseCore import *
+
+
+def recursiveParser(entranceFile, funcList=None) -> list:
+    """
+    单个文件的递归解析
+    :param funcList: 需要导入的函数
+    :param entranceFile:
+    :return:
+    """
+    # 得到imports 和 fromImports
+    lines = parseFile(entranceFile)
+    importModules, fromModules, otherLines = parseSinglePy(lines)
+    restImportModules = []
+    restOtherLines = []
+    # 处理import 语句的模块
+    for module in importModules:
+        pyFilePath = module + ".py"
+        # 保存未找到的模块的原文
+        if not isPyFileCanFind(pyFilePath):
+            print("can't find module file: ", pyFilePath)
+            restImportModules.append(importModules[module])
+            continue
+        childImportModule, childOtherLines = recursiveParser(pyFilePath)
+        restImportModules += childImportModule
+        restOtherLines += childOtherLines
+    # 处理 from import 语句的模块
+    for module in fromModules:
+        pyFilePath = module + ".py"
+        if not isPyFileCanFind(pyFilePath):
+            print("can't find module file: ", pyFilePath)
+            restImportModules += fromModules[module].values()
+            continue
+        childImportModule, childOtherLines = recursiveParser(pyFilePath)
+        restImportModules += childImportModule
+        restOtherLines += childOtherLines
+        if funcList:
+            importedPart = getPartImportedFuncs(childOtherLines, fromModules[module].keys())
+            restOtherLines = importedPart + restOtherLines  # TODO:是否更改
+    return [restImportModules, restOtherLines + otherLines]
+
+
+def main(entrancePath):
+    # change folder to entranceFile's folder
+    workFolder, entranceFile = getWorkFolderWithFile(entrancePath)
+    savePath = os.path.join(os.path.abspath("../examples"), "output", entranceFile)
+    os.chdir(workFolder)
+    # 入口文件
+    restImportModules, otherLines = recursiveParser(entranceFile)
+    showMainRests(entrancePath, restImportModules, otherLines)
+    outputPyFile(restImportModules,
+                 otherLines,
+                 savePath)
+
+
+if __name__ == '__main__':
+    makeFolder("output")
+
+    main(r"D:\Project\mergeMultiPyFiles\demo_complicate\demo_simple\runMeSim.py")
+    main(r"D:\Project\mergeMultiPyFiles\demo_complicate\demo_complicate\runMeCom.py")

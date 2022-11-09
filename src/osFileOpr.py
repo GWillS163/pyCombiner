@@ -5,10 +5,14 @@
 # 系统文件操作
 
 import os
+import time
 
 
 def outputPyFile(restImportLines, restCodeLines, path):
-    with open(path, 'w', encoding='utf-8') as f:
+    # make new pyFile to write codes
+    currentTime = time.strftime("%Y%m%d_%H%M%S", time.localtime())
+
+    with open(path.replace(".py", f"{currentTime}.py"), 'w', encoding='utf-8') as f:
         for importLine in restImportLines:
             f.write(importLine)
             f.write("\n")
@@ -34,7 +38,7 @@ def getWorkFolderWithFile(entranceFile) -> list:
     :param entranceFile:
     :return:
     """
-    divideNum = entranceFile.rfind('/')
+    divideNum = entranceFile.rfind('\\')
     return [entranceFile[:divideNum], entranceFile[divideNum + 1:]]
 
 

@@ -5,9 +5,9 @@
 import os.path
 
 from src.echo import showMainRests
-from lineParse import *
-from osFileOpr import *
-from parseCore import *
+from src.lineParse import *
+from src.osFileOpr import *
+from src.parseCore import *
 
 
 def recursiveParser(entranceFile, funcList=None) -> list:
@@ -52,18 +52,20 @@ def recursiveParser(entranceFile, funcList=None) -> list:
 def main(entrancePath):
     # change folder to entranceFile's folder
     workFolder, entranceFile = getWorkFolderWithFile(entrancePath)
-    savePath = os.path.join(os.path.abspath("../examples"), "output", entranceFile)
     os.chdir(workFolder)
+    outFolder = "CombineOutput"
+    makeFolder(outFolder)
+    savePath = os.path.join(".", outFolder, entranceFile)
     # 入口文件
     restImportModules, otherLines = recursiveParser(entranceFile)
     showMainRests(entrancePath, restImportModules, otherLines)
     outputPyFile(restImportModules,
                  otherLines,
                  savePath)
+    print("saved to: ", savePath)
 
 
 if __name__ == '__main__':
-    makeFolder("output")
-
-    main(r"D:\Project\mergeMultiPyFiles\demo_complicate\demo_simple\runMeSim.py")
-    main(r"D:\Project\mergeMultiPyFiles\demo_complicate\demo_complicate\runMeCom.py")
+    # Test
+    main(r"D:\Project\mergeMultiPyFiles\examples\demo_simple\runMeSim.py")
+    main(r"D:\Project\mergeMultiPyFiles\examples\demo_complicate\runMeCom.py")

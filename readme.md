@@ -4,7 +4,7 @@
  - import ... sentence 
  - from ... import sentence 
  - restLines need import.
-![](mergeIntroduce.jpg)
+![](res/mergeIntroduce.jpg)
 ### How it deals with import statements
 summarize introduce of it simply, It is render "import ..." to ["import ... ", "codeLines"]
 There are some instances:

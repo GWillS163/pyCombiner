@@ -1,0 +1,3 @@
+[console_scripts]
+pyCombiner = pyCombiner.__main__:run
+

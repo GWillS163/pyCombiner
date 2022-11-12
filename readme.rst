@@ -10,7 +10,7 @@ parser files to get 3 Parts of each .py file
 
 |image0|
 
-How it deals with import
+How it deals with import statement
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 statements summarize introduce of it simply, It is render "import ..."
@@ -49,4 +49,4 @@ TODO
 
    from src import showString as s
 
-.. |image0| image:: res/introImg.png
+.. |image0| image:: https://github.com/GWillS163/pyCombiner/raw/master/res/introImg.png

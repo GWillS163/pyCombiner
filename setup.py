@@ -9,11 +9,13 @@ from setuptools import setup, find_packages
 
 setup(
     name='pyCombiner',
-    version="0.0.2",
+    version="0.0.3",
     description=(
-        'Combine that all your python files in your project sequential into one by the relationship of import statement. '
+        'Combine that all your python files in your project sequential'
+        ' into one by the relationship of import statement. '
     ),
     long_description=open('README.rst').read(),
+    long_description_content_type='text/markdown',
     author='JunQingQing',
     author_email='gwills@163.com',
     maintainer='JunQingQing',
@@ -36,4 +38,10 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Topic :: Software Development :: Libraries'
     ],
+
+    # scripts=['bin/main'],
+    entry_points={
+        # 'console_scripts': ['pyCombiner=pyCombiner.command_line:main'],
+        'console_scripts': ['pyCombiner=pyCombiner.__main__:run'],
+    }
 )

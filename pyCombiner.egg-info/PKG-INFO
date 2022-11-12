@@ -1,6 +1,6 @@
-Metadata-Version: 1.2
+Metadata-Version: 2.1
 Name: pyCombiner
-Version: 0.0.2
+Version: 0.0.3
 Summary: Combine that all your python files in your project sequential into one by the relationship of import statement. 
 Home-page: https://gwills163.github.io/
 Author: JunQingQing
@@ -74,3 +74,4 @@ Classifier: Programming Language :: Python :: 3.6
 Classifier: Programming Language :: Python :: 3.7
 Classifier: Programming Language :: Python :: 3.8
 Classifier: Topic :: Software Development :: Libraries
+Description-Content-Type: text/markdown

@@ -8,21 +8,31 @@
 
 import sys
 import os.path
+from echos.colorfulPrint import *
 from pyCombiner.main import main
 
 
-print("Welcome to use the CLI of PyCombine! 0.0.1\n")
+print("Welcome for use the CLI of PyCombine Demo! \n")
 
 
 def run():
     if len(sys.argv) == 1:
+        # print red error message
+        colorPrint("No input file", color="red")
         print("Please input the entrance file path.\n"
-              "For example: pyCombiner ./pyCombiner/main.py")
+              "For example: ", end="")
+        colorPrint("pyCombiner ./pyCombiner/main.py", color="green")
         sys.exit(0)
 
     entrancePath = sys.argv[1]
     if not os.path.exists(entrancePath):
-        print("The entrance file path is not correct.")
+        # print red error message
+        colorPrint("[Error]", color="red")
+        print("No such file or directory: ")
         sys.exit(0)
 
     main(entrancePath)
+
+
+if __name__ == '__main__':
+    run()

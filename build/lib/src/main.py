@@ -4,7 +4,7 @@
 # Time: 20:20
 import os.path
 
-from pyCombiner.echo import showMainRests
+from pyCombiner.echos.echo import showMainRests
 from pyCombiner.lineParse import *
 from pyCombiner.osFileOpr import *
 from pyCombiner.parseCore import *

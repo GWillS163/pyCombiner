@@ -1,52 +1,40 @@
-The logic of PyCombiner
+The function of pyCombiner
 =======================
 
-parser files to get 3 Parts of each .py file
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Combine that all your python files in your project sequential into one by the relationship of import statement.
 
--  import ... sentence
--  from ... import sentence
--  Remaining lines of code to be imported.
 
 |image0|
 
+
 How it deals with import statement
-~~~~~~~~~~~~~~~~~~~~~~~~
+==================================
 
-statements summarize introduce of it simply, It is render "import ..."
-to ["import ... ", "codeLines"] There are some instances:
+Let me summarize introduce of it simply.
 
+- recognize "import ..." sentence and "from ... import ..." sentence ...
+- turn the import sentence into function codes
+- combine the function codes into one file
+
+In recent version, it can deal with "import ..." sentence basically, but not enough.
+
+Supported Sentence
+==================
 
 .. code:: python
-
-    # 1. local module totally
-    # TODO: dont know that How process it
-    import utils
-    res1 = []
-
-    # 2. lib module
-    # just keep the import statement
     import os
-    res2 = [['import os'], []]
+    import os, sys
+    from bs4 import BeautifulSoup  # will completely import even though that function not use exterior lib
+    from bs4 import *
+    # some libraries are not written by user. so it's line of codes will be preserved.
 
-    # 3.  local module totally import
-    from service import *  #
-    res3 = [[], ['def ...', '...', 'def ...', '...']]
 
-    # 4.1 local module partially import
-    # TODO: cant process it
-    from echo import showWelcome
-    res4 = [[], ['def showWelcome():', '...']]
-    # 4.2 partially import but use other function
-    from src import showRests
-
-TODO
-====
-
--  Can't process the "as ..." statements
+Not Supported Yet
+=================
 
 .. code:: python
+   from src import showString as s  # Can't process the "as ..." statements
+    from src import showRests  # partially import but use other function
 
-   from src import showString as s
 
 .. |image0| image:: https://github.com/GWillS163/pyCombiner/raw/master/res/introImg.png

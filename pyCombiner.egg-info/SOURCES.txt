@@ -1,5 +1,4 @@
 MANIFEST.in
-README.rst
 setup.py
 pyCombiner/__init__.py
 pyCombiner/__main__.py
@@ -13,6 +12,7 @@ pyCombiner.egg-info/dependency_links.txt
 pyCombiner.egg-info/entry_points.txt
 pyCombiner.egg-info/top_level.txt
 pyCombiner/depend/__init__.py
+pyCombiner/depend/findOri.py
 pyCombiner/echos/__init__.py
 pyCombiner/echos/colorfulPrint.py
 pyCombiner/echos/echo.py

@@ -38,6 +38,8 @@ def getWorkFolderWithFile(entranceFile) -> list:
     :param entranceFile:
     :return:
     """
+    if not "\\" in entranceFile or not "/" in entranceFile:
+        entranceFile = os.path.abspath(entranceFile)
     divideNum = entranceFile.rfind('\\')
     return [entranceFile[:divideNum], entranceFile[divideNum + 1:]]
 

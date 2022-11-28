@@ -6,15 +6,14 @@
 # Time: 17:53
 
 from setuptools import setup, find_packages
-
+from pyCombiner import version, description
 setup(
     name='pyCombiner',
-    version="0.0.6",
+    version=version,
     description=(
-        'Combine that all your python files in your project sequential'
-        ' into one by the relationship of import statement. '
+        description
     ),
-    long_description=open('README.rst').read(),
+    long_description=open('readme.md').read(),
     long_description_content_type='text/markdown',
     author='JunQingQing',
     author_email='gwills@163.com',

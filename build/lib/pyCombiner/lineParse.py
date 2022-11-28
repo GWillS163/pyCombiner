@@ -5,7 +5,7 @@
 import re
 
 
-def getModules(importedStr):
+def parseModules(importedStr):
     """
     获得import后面的模块名
     :param importedStr:
@@ -26,54 +26,27 @@ def getImportLineModules(importLine: str) -> list:
         importLine = importLine[:importLine.find('as')]
 
     res = re.findall(r'import\s+(.*)', importLine)
-    return getModules(res[0])
+    return parseModules(res[0])
 
 
 def getFromLineModules(fromLine: str) -> list:
     """
-    获取单行From 导入
+    处理from [origin] import [func1, func2] 的情况
     :param fromLine:
-    :return:
+    :return: [origin] [func1, func2]
     """
-    importStart = fromLine.find('import')
+    importStartIndex = fromLine.find('import')
     # find the words after "from" and after "import" by regex
-    res = re.findall(r'from\s+(.*)\s?', fromLine[:importStart])
+    res = re.findall(r'from\s+(.*)\s?', fromLine[:importStartIndex])
     if not res:
         return []
 
     moduleName = res[0].strip()
-    funcsImported = getImportLineModules(fromLine[importStart:])
+    funcsImported = getImportLineModules(fromLine[importStartIndex:])
     return [moduleName, funcsImported]
 
 
-def getImportModules(lines: list) -> list:
-    """
-    Get the modules that import directly.
-    :param lines:
-    :return: ['os', 'utils']
-    """
-    modules = []
-    for line in lines:
-        modules.extend(getImportLineModules(line))
-    return modules
-
-
-def getFromModules(lines: list) -> list:
-    """
-    Get the modules that import from other modules.
-    :param lines:
-    :return:
-    """
-    modules = []
-    for line in lines:
-        fromLineImport = getFromLineModules(line)
-        if not fromLineImport:
-            continue
-        modules.append(fromLineImport)
-    return modules
-
-
-def getImportLineDict(importLine):
+def getImportLineData(importLine):
     """
     return {Module: context, Module: context}
     :param importLine:
@@ -90,7 +63,7 @@ def getImportLineDict(importLine):
     return importLinesDict
 
 
-def getFromLineDict(fromLine) -> dict:
+def getFromLineData(fromLine) -> dict:
     """
     return {Module: {func: context, func: context}
     :param fromLine: from ... import ..., ... (as ...)
@@ -113,7 +86,7 @@ def parseSinglePy(lines) -> list:
     """
     parse a single py file, get imports ,froms, others
     :param lines:
-    :return: [{}, {}, []]
+    :return: [{'os': 'import os'}, {}, []]
     """
     importModules = {}  # key is moduleName, value is import statement
     fromModules = {}
@@ -123,11 +96,18 @@ def parseSinglePy(lines) -> list:
             continue
         lineStriped = line.strip()
         if line.startswith('import'):
-            importModules.update(getImportLineDict(lineStriped))
+            importModules.update(getImportLineData(lineStriped))
         elif line.startswith('from'):
-            fromModules.update(getFromLineDict(lineStriped))
+            fromModules.update(getFromLineData(lineStriped))
         else:
             otherLines.append(line)
 
     return [importModules, fromModules, otherLines]
 
+
+if __name__ == '__main__':
+    print(getFromLineData("from core.main import path, sys"))
+    print(getImportLineData("import os"))
+
+    print(getImportLineData("import os, datetime"))
+    print(getFromLineData("from os import path, sys"))

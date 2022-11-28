@@ -23,14 +23,6 @@ def isModuleExist(moduleName):
     return True
 
 
-def isPyFileCanFind(pyFilePath):
-    """
-    检查py文件是否是用户文件,
-    排除模块文件
-    :param pyFilePath:
-    :return:
-    """
-    return os.path.isfile(pyFilePath)
 
 
 def getModuleAllFuncs(module) -> list:

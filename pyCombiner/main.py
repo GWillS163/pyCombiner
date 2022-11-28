@@ -8,64 +8,104 @@ from pyCombiner.echos.echo import showMainRests
 from pyCombiner.lineParse import *
 from pyCombiner.osFileOpr import *
 from pyCombiner.parseCore import *
+from pyCombiner.depend.findOri import *
 
 
-def recursiveParser(entranceFile, funcList=None) -> list:
+def recursiveParser(entranceFilePath, funcList=None, visited=None) -> list:
     """
     单个文件的递归解析
+    :param visited:
     :param funcList: 需要导入的函数
-    :param entranceFile:
+    :param entranceFilePath:
     :return:
     """
+
+    def enterDeeper(sumImportModules, sumOtherLines):
+        """进入下一层; enter deeper"""
+        subImportModule, subOtherLines = recursiveParser(deeperFilePath, visited=visited)
+        sumImportModules += subImportModule
+        sumOtherLines += subOtherLines
+        return subOtherLines
+
     # 得到imports 和 fromImports
-    lines = parseFile(entranceFile)
+    if visited is None:
+        visited = []
+    lines = parseFile(entranceFilePath)
+    workFolder, entranceFile = getWorkFolderWithFile(entranceFilePath)
+    if entranceFilePath in visited:
+        return [[], []]
     importModules, fromModules, otherLines = parseSinglePy(lines)
+    visited.append(entranceFilePath)
     restImportModules = []
     restOtherLines = []
     # 处理import 语句的模块
     for module in importModules:
-        pyFilePath = module + ".py"
         # 保存未找到的模块的原文
-        if not isPyFileCanFind(pyFilePath):
-            print("can't find module file: ", pyFilePath)
+        deeperFilePath = findFromOrigin(module, workFolder)
+        if not deeperFilePath:  # 若未找到
+            # print("can't find module file: ", module)
             restImportModules.append(importModules[module])
-            continue
-        childImportModule, childOtherLines = recursiveParser(pyFilePath)
-        restImportModules += childImportModule
-        restOtherLines += childOtherLines
+        else:
+            enterDeeper(restImportModules, restOtherLines)
+
     # 处理 from import 语句的模块
     for module in fromModules:
-        pyFilePath = module + ".py"
-        if not isPyFileCanFind(pyFilePath):
-            print("can't find module file: ", pyFilePath)
+        # 尝试找到模块的文件
+
+        deeperFilePath = findFromOrigin(module, workFolder)
+        if not deeperFilePath:
+            # print("can't find module file: ", module)
             restImportModules += fromModules[module].values()
             continue
-        childImportModule, childOtherLines = recursiveParser(pyFilePath)
-        restImportModules += childImportModule
-        restOtherLines += childOtherLines
-        if funcList:
-            importedPart = getPartImportedFuncs(childOtherLines, fromModules[module].keys())
-            restOtherLines = importedPart + restOtherLines  # TODO:是否更改
+        else:
+            # 进入模块文件
+            childOtherLines = enterDeeper(restImportModules, restOtherLines)
+            if funcList:
+                importedPart = getPartImportedFuncs(childOtherLines, fromModules[module].keys())
+                restOtherLines = importedPart + restOtherLines
     return [restImportModules, restOtherLines + otherLines]
 
 
-def main(entrancePath):
+def combineImportLines(restImportModules):
+    """
+    将import语句合并
+    :param restImportModules:
+    :return:
+    """
+    combineRestImportLines = list(set(restImportModules))
+    # sort by length
+    combineRestImportLines.sort(key=lambda x: len(x))
+    # TODO: 优化合并算法
+    # afterCombined = []
+    # combine some import lines of the same start words
+    # from typing import Optional" to "from typing import Dict, Optional"
+    # for importLine in combineRestImportLines:
+    #     if not importLine.startswith("from"):
+    #         continue
+    #     if importLine.split(" ")[1] in
+    return combineRestImportLines
+
+
+def main(entranceFilePath):
     # change folder to entranceFile's folder
-    workFolder, entranceFile = getWorkFolderWithFile(entrancePath)
+    workFolder, entranceFile = getWorkFolderWithFile(entranceFilePath)
     os.chdir(workFolder)
     outFolder = "CombineOutput"
     makeFolder(outFolder)
     savePath = os.path.join(".", outFolder, entranceFile)
     # 入口文件
-    restImportModules, otherLines = recursiveParser(entranceFile)
-    showMainRests(entrancePath, restImportModules, otherLines)
-    outputPyFile(restImportModules,
+    restImportModules, otherLines = recursiveParser(entranceFile, visited=[])
+    combineRestImportLines = combineImportLines(restImportModules)
+    showMainRests(entranceFilePath, combineRestImportLines, otherLines)
+    outputPyFile(combineRestImportLines,
                  otherLines,
                  savePath)
-    print("saved to: ", savePath)
+    # print("saved to: ", savePath)
+    return savePath
 
 
 if __name__ == '__main__':
     # Test
-    main(r"D:\Project\mergeMultiPyFiles\examples\demo_simple\runMeSim.py")
-    main(r"D:\Project\mergeMultiPyFiles\examples\demo_complicate\runMeCom.py")
+    # main(r"D:\Project\mergeMultiPyFiles\examples\demo_simple\runMeSim.py")
+    # main(r"D:\Project\mergeMultiPyFiles\examples\demo_complicate\runMeCom.py")
+    print(main(r"..\\examples\\realProject1\\realTest.py"))

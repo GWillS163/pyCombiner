@@ -8,15 +8,16 @@
 
 import sys
 import os.path
-from echos.colorfulPrint import *
+from .echos.colorfulPrint import *
 from pyCombiner.main import main
-
-
-print("Welcome for use the CLI of PyCombine Demo! \n")
+from pyCombiner import version, description
 
 
 def run():
     if len(sys.argv) == 1:
+        print(f"Version: {version}\n"
+              f"Description: {description}\n"
+              " \n")
         # print red error message
         colorPrint("No input file", color="red")
         print("Please input the entrance file path.\n"
@@ -31,7 +32,9 @@ def run():
         print("No such file or directory: ")
         sys.exit(0)
 
-    main(entrancePath)
+    outputPath = main(entrancePath)
+    print("\nThe output file is: ", end="")
+    colorPrint(outputPath, color="green")
 
 
 if __name__ == '__main__':

@@ -46,10 +46,12 @@ def showMainRests(path, imports, codes):
     for line in imports:
         print(line)
     print(titleBanner("restImports"))
-    print(titleBanner("code"))
-    for line in codes:
-        print(line, end="")
-    print(titleBanner("code"))
+    # print(titleBanner("code"))
+    # for line in codes:
+    #     print(line, end="")
+    print(f"number of import line: {len(imports)}")
+    print(f"number of code lines: {len(codes)}")
+    # print(titleBanner("code"))
 
 
 if __name__ == '__main__':

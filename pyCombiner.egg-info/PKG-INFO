@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pyCombiner
-Version: 0.0.6
+Version: 0.1.0
 Summary: Combine that all your python files in your project sequential into one by the relationship of import statement. 
 Home-page: https://gwills163.github.io/
 Author: JunQingQing
@@ -8,48 +8,14 @@ Author-email: gwills@163.com
 Maintainer: JunQingQing
 Maintainer-email: gwills@163.com
 License: BSD License
-Description: The function of pyCombiner
-        =======================
+Description: # The Function of PyCombiner
         
-        Combine that all your python files in your project sequential into one by the relationship of import statement.
+        it is a commandline tool to combine python files into one file.
+        The generated resultant and usage is like pyinstaller, but is much simpler, and resultant is not ".exe", is ".py".
         
-        
-        |image0|
-        
-        
-        How it deals with import statement
-        ==================================
-        
-        Let me summarize introduce of it simply.
-        
-        - recognize "import ..." sentence and "from ... import ..." sentence ...
-        - turn the import sentence into function codes
-        - combine the function codes into one file
-        
-        In recent version, it can deal with "import ..." sentence basically, but not enough.
-        
-        Supported Sentence
-        ==================
-        
-        .. code:: python
-        
-            import os
-            import os, sys
-            from bs4 import BeautifulSoup  # will completely import even though that function not use exterior lib
-            from bs4 import *
-            # some libraries are not written by user. so it's line of codes will be preserved.
+        <img src="https://github.com/GWillS163/pyCombiner/raw/master/res/introImg.png">
         
         
-        Not Supported Yet
-        =================
-        
-        .. code:: python
-        
-           from src import showString as s  # Can't process the "as ..." statements
-            from src import showRests  # partially import but use other function
-        
-        
-        .. |image0| image:: https://github.com/GWillS163/pyCombiner/raw/master/res/introImg.png
         
 Platform: all
 Classifier: Development Status :: 4 - Beta

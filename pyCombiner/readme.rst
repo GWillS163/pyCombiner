@@ -37,4 +37,4 @@ Not Supported Yet
     from src import showRests  # partially import but use other function
 
 
-.. |image0| image:: https://github.com/GWillS163/pyCombiner/raw/master/res/introImg.png
+.. |image0| image::

@@ -106,6 +106,7 @@ def parseSinglePy(lines) -> list:
 
 
 if __name__ == '__main__':
+    # TODO: 还需要处理忽略掉 if__name__ == '__main__' 的情况
     print(getFromLineData("from core.main import path, sys"))
     print(getImportLineData("import os"))
 

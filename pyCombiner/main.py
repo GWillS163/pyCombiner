@@ -86,13 +86,20 @@ def combineImportLines(restImportModules):
     return combineRestImportLines
 
 
+def getSavePath(outFolder, entranceFile):
+    makeFolder(outFolder)
+    savePath = os.path.join(".", outFolder, entranceFile)
+
+    currentTime = time.strftime("%Y%m%d_%H%M%S", time.localtime())
+    return savePath.replace(".py", f"{currentTime}.py")
+
+
 def main(entranceFilePath):
     # change folder to entranceFile's folder
     workFolder, entranceFile = getWorkFolderWithFile(entranceFilePath)
     os.chdir(workFolder)
     outFolder = "CombineOutput"
-    makeFolder(outFolder)
-    savePath = os.path.join(".", outFolder, entranceFile)
+    savePath = getSavePath(outFolder, entranceFile)
     # 入口文件
     restImportModules, otherLines = recursiveParser(entranceFile, visited=[])
     combineRestImportLines = combineImportLines(restImportModules)

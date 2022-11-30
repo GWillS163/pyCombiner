@@ -10,13 +10,12 @@ import sys
 import os.path
 from .echos.colorfulPrint import *
 from pyCombiner.main import main
-from pyCombiner import version, description
+from pyCombiner import description
 
 
 def run():
     if len(sys.argv) == 1:
-        print(f"Version: {version}\n"
-              f"Description: {description}\n"
+        print(f"Description: {description}\n"
               " \n")
         # print red error message
         colorPrint("No input file", color="red")

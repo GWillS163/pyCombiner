@@ -1,4 +1,5 @@
 MANIFEST.in
+pyproject.toml
 readme.md
 setup.py
 pyCombiner/__init__.py

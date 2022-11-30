@@ -1,0 +1,24 @@
+name = "pyCombiner"
+version = "0.1.6"
+description = "Combine that all your python files in your project sequential into one by the relationship of import satement."
+
+license='BSD License'
+authors = [
+    "JunQingQing <gwills@163.com>",
+]
+maintainers = [
+    "JunQingQing <gwills@163.com>",
+]
+readme='readme.md'
+homepage = "https://gwills163.github.io/"
+repository = "https://github.com/GWillS163/pyCombiner.git"
+
+[tool.poetry]
+packages = [
+    { include = "examples", format="sdist" },
+]
+# ...
+include = ["readme.md"]
+
+[tool.poetry.scripts]
+pyCombiner = 'pyCombiner.__main__:run'

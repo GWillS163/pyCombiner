@@ -6,7 +6,7 @@ def main():
     return "hello"
 
 
-version = "0.1.0"
+version = "0.1.1"
 description = "Combine that all your python files " \
               "in your project sequential " \
               "into one by the relationship of import " \

@@ -10,9 +10,7 @@ import time
 
 def outputPyFile(restImportLines, restCodeLines, path):
     # make new pyFile to write codes
-    currentTime = time.strftime("%Y%m%d_%H%M%S", time.localtime())
-
-    with open(path.replace(".py", f"{currentTime}.py"), 'w', encoding='utf-8') as f:
+    with open(path, 'w', encoding='utf-8') as f:
         for importLine in restImportLines:
             f.write(importLine)
             f.write("\n")

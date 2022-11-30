@@ -13,6 +13,10 @@ setup(
     description=(
         description
     ),
+    include_dirs=[
+        'examples',
+    ],
+    include_package_data=True,
     long_description=open('readme.md').read(),
     long_description_content_type='text/markdown',
     author='JunQingQing',

@@ -4,11 +4,11 @@
 # Time: 20:20
 import os.path
 
-from pyCombiner.echos.echo import showMainRests
-from pyCombiner.lineParse import *
-from pyCombiner.osFileOpr import *
-from pyCombiner.parseCore import *
-from pyCombiner.depend.findOri import *
+from echos.echo import showMainRests
+from lineParse import *
+from osFileOpr import *
+from parseCore import *
+from depend.findOri import *
 
 
 def recursiveParser(entranceFilePath, funcList=None, visited=None) -> list:

@@ -6,8 +6,7 @@
 
 # TODO: as xx 这种语法解析不了
 import os
-
-from pyCombiner.osFileOpr import parseFile
+from osFileOpr import parseFile
 
 
 def isModuleExist(moduleName):
@@ -23,6 +22,13 @@ def isModuleExist(moduleName):
     return True
 
 
+def isPyFileCanFind(pyFilePath):
+    """
+    检查py文件是否存在
+    :param pyFilePath:
+    :return:
+    """
+    return os.path.exists(pyFilePath)
 
 
 def getModuleAllFuncs(module) -> list:

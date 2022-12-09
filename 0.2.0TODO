@@ -1,0 +1,10 @@
+删除输出提示的
+ forWorking/HuayunTechRPA/Beijing_ExlGenerate_2022-8-18/realTest.py
+  -  -  -  -  -  -  -  -  -  -
+
+更改输出的文件名不是 相对路径
+The output file is: .\CombineOutput\realTest20221209_125032.py
+而是绝对路径
+The output file is: D:\forWorking\HuayunTechRPA\Beijing_ExlGenerate_2022-8-18\CombineOutput\realTest20221209_125032.py
+
+3. 处理__name__ == __main__语句

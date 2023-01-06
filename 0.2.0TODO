@@ -8,3 +8,9 @@ The output file is: .\CombineOutput\realTest20221209_125032.py
 The output file is: D:\forWorking\HuayunTechRPA\Beijing_ExlGenerate_2022-8-18\CombineOutput\realTest20221209_125032.py
 
 3. 处理__name__ == __main__语句
+
+4. 处理中间的import语句，导入后应该在原位。
+建议默认执行保持现在的方式，同时可以设置 -o OriginLine 选项，保持原来的位置。
+2023-1-6
+
+5. 处理encoding语句，如果有的话，应该在最前面。

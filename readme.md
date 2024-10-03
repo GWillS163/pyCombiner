@@ -9,6 +9,8 @@
 it is a commandline tool to combine python files into one file.
 The generated resultant and usage is like pyinstaller, but is much simpler, and resultant is not ".exe", is ".py".
 
+path on this repository:
+examples/demo_complicate
 <img src="https://github.com/GWillS163/pyCombiner/raw/master/res/introImg.png">
 
 # Install 

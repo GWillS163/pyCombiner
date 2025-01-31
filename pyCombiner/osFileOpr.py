@@ -7,14 +7,20 @@
 import os
 import time
 
+from pyCombiner.echos.colorfulPrint import colorPrint
+
 
 def outputPyFile(restImportLines, restCodeLines, path):
     # make new pyFile to write codes
-    with open(path, 'w', encoding='utf-8') as f:
-        for importLine in restImportLines:
-            f.write(importLine)
-            f.write("\n")
-        f.writelines(restCodeLines)
+    try:
+        with open(path, 'w', encoding='utf-8') as f:
+            for importLine in restImportLines:
+                f.write(importLine)
+                f.write("\n")
+            f.writelines(restCodeLines)
+    except PermissionError:
+        colorPrint("PermissionError!!!  Change Another Path!", color="red" )
+        raise PermissionError
 
 
 def parseFile(filePath: str) -> list:

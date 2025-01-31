@@ -43,7 +43,7 @@ def autoGetSht2Params(sht2Mdl, sht0Sur, sht2DeleteCopiedColScp, mdlTltStt):
     """
 
     # 已自动获取 sht2WgtLstScp = "C3:C13"
-    # 已自动获取 sht2DeleteCopiedRowScp = "A32:A55"  # 要删除的部分需要动态获取 党廉&纪检 的区间
+    # 已自动获取 sht2DeleteCopiedRowScp = "A32:A55"  # 要删除的部分需要动态获取 团廉&纪检 的区间
     # 用户指定 sht2DeleteCopiedColScp = "C1:J1"  需要删除的列
 
     # Title标题 - 从模板中获取
@@ -122,20 +122,20 @@ def autoGetSht4Params(sht4, sht4IndexFromMdl4Scp, sht4TitleFromSht2Scp, sht4SumT
     return sht4IndexFromMdl4Scp, sht4TitleFromSht2Scp, sht4SumTitleFromMdlScp,
 
 
-def paramsCheckExist(surveyExlPath, partyAnsExlPh, peopleAnsExlPh):
+def paramsCheckExist(surveyExlPath, groupAnsExlPh, peopleAnsExlPh):
     """
     检查输入文件是否存在, 并新建保存路径
     Check Input files are
     :param peopleAnsExlPh:
     :param surveyExlPath:
-    :param partyAnsExlPh:
+    :param groupAnsExlPh:
     :return:
     """
-    if surveyExlPath == partyAnsExlPh:
-        raise FileExistsError("文件名输出重复,", surveyExlPath, partyAnsExlPh)
+    if surveyExlPath == groupAnsExlPh:
+        raise FileExistsError("文件名输出重复,", surveyExlPath, groupAnsExlPh)
     fileDict = {
         "问卷模板文件": surveyExlPath,
-        "党员答题文件": partyAnsExlPh,
+        "团员答题文件": groupAnsExlPh,
         "群众答题文件": peopleAnsExlPh
     }
     for name, path in fileDict.items():
@@ -207,7 +207,7 @@ def getSavePath(savePath, fileYear, fileName):
     :return:
     """
     # make an output dir with current time
-    outputDir = os.path.join(savePath, "PartyBuildOutput_" + datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
+    outputDir = os.path.join(savePath, "GroupBuildOutput_" + datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
     os.makedirs(outputDir)
 
     sumSavePathNoSuffix = getSumSavePathNoSuffix(outputDir, fileYear, fileName)

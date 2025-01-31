@@ -13,7 +13,7 @@ print("Start to run the process...")
 outputDir, sumSavePathNoSuffix = getSavePath(savePath, fileYear, fileName)
 
 exlMain = Excel_Operation(
-    surveyExlPh, partyAnsExlPh, peopleAnsExlPh,
+    surveyExlPh, groupAnsExlPh, peopleAnsExlPh,
     surveyTestShtName, sht1ModuleName, sht2ModuleName, sht3ModuleName, sht4ModuleName,
     sht1Name, sht2Name, sht3Name, sht4Name,
 
@@ -26,4 +26,4 @@ exlMain = Excel_Operation(
     # Sheet4 生成配置:
     sht4IndexFromMdl4Scp, sht4TitleFromSht2Scp, sht4SumTitleFromMdlScp  # , sht4DataRowRan
 )
-exlMain.run(partyAnsExlPh, peopleAnsExlPh, outputDir, sumSavePathNoSuffix)
+exlMain.run(groupAnsExlPh, peopleAnsExlPh, outputDir, sumSavePathNoSuffix)

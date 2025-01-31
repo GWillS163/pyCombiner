@@ -14,3 +14,16 @@ The output file is: D:\forWorking\HuayunTechRPA\Beijing_ExlGenerate_2022-8-18\Co
 2023-1-6
 
 5. 处理encoding语句，如果有的话，应该在最前面。
+
+
+6. 未解析的应该标红
+
+7. 添加分支结构 树形图， 标出原始文件和输出文件
+
+8. 输出的里面可以根据 DEBUG需要， 展示出原文的分界线
+
+9. 指定输出文件夹
+
+
+终极目标：
+精简版：  导入时，仅导入相关代码

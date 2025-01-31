@@ -14,7 +14,7 @@ class Excel_Operation:
     surveyQuesTypeCol: str
     sht4TitleFromSht2Scp: str
 
-    def __init__(self, surveyExlPath, partyAnsExlPh, peopleAnsExlPh,
+    def __init__(self, surveyExlPath, groupAnsExlPh, peopleAnsExlPh,
                  surveyTestShtName, sht1ModuleName, sht2ModuleName, sht3ModuleName, sht4ModuleName,
                  # ResultExl 配置
                  sht1Name, sht2Name, sht3Name, sht4Name,
@@ -36,7 +36,7 @@ class Excel_Operation:
         self.orgShtName = '行政机构组织'
         self.otherTitle = "其他人员"
         self.lv2AvgTitle = "二级单位成绩"
-        paramsCheckExist(surveyExlPath, partyAnsExlPh, peopleAnsExlPh)
+        paramsCheckExist(surveyExlPath, groupAnsExlPh, peopleAnsExlPh)
 
         # self.surveyExlPath = surveyExlPath
         # self.scoreExlPath = scrExlPh
@@ -121,7 +121,7 @@ class Excel_Operation:
         sht1_lv2Result = self.resultExl.sheets.add(self.sht1NameRes)
 
         # Step2.1: copy left column the surveySht to sht1 partially with style
-        # UnitScpRowList = getUnitScpRowList(self.sht0TestSurvey, "A", "D", ["党建", "宣传文化"])
+        # UnitScpRowList = getUnitScpRowList(self.sht0TestSurvey, "A", "D", ["团建", "宣传文化"])
 
         print("Sheet1 Index Columns Processing...")
         shtCopyTo(self.sht0TestSurvey, self.sht1IndexScpFromSht0,
@@ -166,8 +166,8 @@ class Excel_Operation:
         sht2_lv2Score.range("B1").column_width = 18.8
         print("Step2: 整体复制侧栏 - copy left column the surveySht to sht1, with style")
         shtCopyTo(self.sht0TestSurvey, self.sht2IndexCopyFromSvyScp, sht2_lv2Score, self.sht2IndexCopyTo)
-        print("Step2.1 删除多余行(党廉&纪检) - delete the row of left column redundant")
-        sht2DeleteCopiedRowScp = getSht2DeleteCopiedRowScp(sht2_lv2Score, ['党廉', '纪检'])
+        print("Step2.1 删除多余行(团廉&纪检) - delete the row of left column redundant")
+        sht2DeleteCopiedRowScp = getSht2DeleteCopiedRowScp(sht2_lv2Score, ['团廉', '纪检'])
         sht2_lv2Score.range(sht2DeleteCopiedRowScp).api.EntireRow.Delete()
 
         print("Step2.2: 删除左侧多余单元行 - delete the row of left column redundant")
@@ -418,7 +418,7 @@ class Excel_Operation:
         self.surveyExl.close()
         self.app4Survey1.quit()
 
-    def getFirstSht1WithLvData(self, partyAnsExlPh, peopleAnsExlPh, savePath):
+    def getFirstSht1WithLvData(self, groupAnsExlPh, peopleAnsExlPh, savePath):
         """
         获取第一个sheet1的数据，用于计算其他sheet的数据， 使用后关闭答案
         :return:
@@ -431,16 +431,16 @@ class Excel_Operation:
         surveyData = getSurveyData(self.sht0TestSurvey)
         peopleQuesLst, sht1PeopleData = judges.getStaffData(peopleAnsExlPh, "群众", debugPath, surveyData, True)
         printSht1Data("群众", sht1PeopleData, peopleQuesLst)
-        print("开始获取党员数据 - Start to get party data")
-        partyQuesLst, sht1PartyData = judges.getStaffData(partyAnsExlPh, "党员", debugPath, surveyData, True)
-        printSht1Data("党员", sht1PartyData, partyQuesLst)
+        print("开始获取团员数据 - Start to get group data")
+        groupQuesLst, sht1GroupData = judges.getStaffData(groupAnsExlPh, "团员", debugPath, surveyData, True)
+        printSht1Data("团员", sht1GroupData, groupQuesLst)
         questionSortDebugPath = os.path.join(savePath, "题目对应记录")
-        sht1WithLvCombine = combineMain(questionLst, peopleQuesLst, sht1PeopleData, partyQuesLst, sht1PartyData, questionSortDebugPath)
+        sht1WithLvCombine = combineMain(questionLst, peopleQuesLst, sht1PeopleData, groupQuesLst, sht1GroupData, questionSortDebugPath)
         judges.close()
         printSht1WithLv(sht1WithLvCombine)
         return sht1WithLvCombine
 
-    def run(self, partyAnsExlPh, peopleAnsExlPh, outputDir, sumSavePathNoSuffix):
+    def run(self, groupAnsExlPh, peopleAnsExlPh, outputDir, sumSavePathNoSuffix):
         """
         主程序
         run the whole process, the main function.
@@ -450,7 +450,7 @@ class Excel_Operation:
         stt = time.time()
         departCode = getAllOrgCode(self.surveyExl.sheets(self.orgShtName))
         print("一、获取答题数据，开始判分 - 0. get data of score sheet, start to calculate score")
-        sht1WithLvCombine = self.getFirstSht1WithLvData(partyAnsExlPh, peopleAnsExlPh, outputDir)
+        sht1WithLvCombine = self.getFirstSht1WithLvData(groupAnsExlPh, peopleAnsExlPh, outputDir)
         print(f"\n\033[33m\nGetScore time: {int(time.time() - stt)}s \033[0m")
 
         print("\n二、填充边栏 - II. fill the sidebar")

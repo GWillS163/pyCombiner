@@ -26,13 +26,24 @@ def findFromOrigin(moduleFullName: str, workPath: str) -> str:
     if moduleFullName.startswith("."):
         allWays.append(moduleFullName[1:] + ".py")
         allWays.append(moduleFullName.replace(".", os.sep)[1:] + ".py")
+
     res = ""
     for pyFilePath in allWays:
-        fullPath = os.path.join(workPath, pyFilePath)
-        if os.path.isfile(fullPath):
-            res = fullPath
-        else:
-            res = ""
+        found = False
+        workDir = workPath
+
+        # 支持在当前目录、上级目录和上上级目录查找
+        for level in range(3):  # 当前目录 + 上级目录 + 上上级目录
+            fullPath = os.path.join(workDir, pyFilePath)
+            if os.path.isfile(fullPath):
+                res = fullPath
+                found = True
+                break
+            # 移动到上一级目录
+            workDir = os.path.dirname(workDir)
+
+        if found:
+            break
     return res
 
 

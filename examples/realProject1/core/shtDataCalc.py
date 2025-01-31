@@ -435,7 +435,7 @@ def getShtUnitScp(sht, startRow: int, endRow: int, unitCol: str, contentCol: str
                   skipCol=None, skipWords=None) -> List[List[int]]:
     """
     以contentCol列为最小单位，获取每个unitCol列二级指标的单元范围
-    跳过党廉 and 纪检 part
+    跳过团廉 and 纪检 part
     :return:  [[0, 0], [1, 2], [3, 3], [4, 5] ...
     """
     # get merge cells scope dynamically
@@ -610,7 +610,7 @@ def clacSheet2_surveyGrade(sht1_lv2Result, sht0_survey, questionCol, sht1WithLv,
     sht1WithLvWgt = addSht1Wgt2Sht1WithLv(sht1WithLv, sht1WgtLst)
     lv2UnitSpan = getShtUnitScp(sht1_lv2Result, startRow=3, endRow=40,
                                 unitCol="B", contentCol="D",
-                                skipCol="A", skipWords=["党廉", "纪检"])
+                                skipCol="A", skipWords=["团廉", "纪检"])
     # lv1UnitSpan = getShtUnitScp(sht2_lv2Score, startRow=3, endRow=40,
     #                             unitCol="A", contentCol="B")
     lineData = getLineData(departCode)

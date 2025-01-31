@@ -10,33 +10,33 @@ from .debugPrint import *
 import xlwings as xw
 
 
-def combineMain(questLst, peopleQuestLst, sht1People, partyQuestLst, sht1Party, debugPath):
+def combineMain(questLst, peopleQuestLst, sht1People, groupQuestLst, sht1Group, debugPath):
     """
     依照统计表的答案顺序，将问卷的答案按照顺序排列，没有则为0.
     :param questLst: 统计结果表的答案顺序
     :param peopleQuestLst: 问题顺序
     :param sht1People: sht1PeopleData {lv2: {lv3: [[scoreLst], [scoreLst], ...]}}
-    :param partyQuestLst:  问题顺序
-    :param sht1Party:sht1PartyData {lv2: {lv3: [[scoreLst], [scoreLst], ...]}}
+    :param groupQuestLst:  问题顺序
+    :param sht1Group:sht1GroupData {lv2: {lv3: [[scoreLst], [scoreLst], ...]}}
     :return: sht1WithLv
     """
     # 得到答案的顺序 - get order of answer
-    partyOrderLst = []
+    groupOrderLst = []
     peopleOrderLst = []
     for quest in questLst:
         if quest is None:
             continue
         quest = quest.strip()
         peopleIndex = getMappingIndex(quest, peopleQuestLst)
-        partyIndex = getMappingIndex(quest, partyQuestLst)
+        groupIndex = getMappingIndex(quest, groupQuestLst)
         peopleOrderLst.append(peopleIndex)
-        partyOrderLst.append(partyIndex)
-    sortDebug(questLst, peopleOrderLst, partyOrderLst, partyQuestLst, peopleQuestLst, debugPath, debug=True)
+        groupOrderLst.append(groupIndex)
+    sortDebug(questLst, peopleOrderLst, groupOrderLst, groupQuestLst, peopleQuestLst, debugPath, debug=True)
 
     # 依照统计表的答案顺序，将sht1WithLv整形
     sht1WithLvPeople = reformatSht1WithLv(sht1People, peopleOrderLst)
-    sht1WithLvParty = reformatSht1WithLv(sht1Party, partyOrderLst)
-    sht1WithLvCombine = lastCombination(sht1WithLvPeople, sht1WithLvParty)
+    sht1WithLvGroup = reformatSht1WithLv(sht1Group, groupOrderLst)
+    sht1WithLvCombine = lastCombination(sht1WithLvPeople, sht1WithLvGroup)
     return getSht1WithLv(sht1WithLvCombine)
 
 
@@ -57,26 +57,26 @@ def reformatSht1WithLv(sht1WithLv, orderLst):
     return sht1WithLv
 
 
-def lastCombination(sht1WithLvPeople, sht1WithLvParty):
+def lastCombination(sht1WithLvPeople, sht1WithLvGroup):
     """
-    将people 与 party 结合起来。
+    将people 与 group 结合起来。
     :param sht1WithLvPeople: {lv2: {lv3:[[scoreLst], [scoreLst]]}}
-    :param sht1WithLvParty: {lv2: {lv3:[[scoreLst], [scoreLst]]}}
+    :param sht1WithLvGroup: {lv2: {lv3:[[scoreLst], [scoreLst]]}}
     :return: {lv2: {lv3:[[scoreLst], [scoreLst]]}}
     """
     sumSht1WithLv = sht1WithLvPeople.copy()
-    # 对于每一个党员的二级单位进行处理 - for each lv2 of party
-    for lv2 in sht1WithLvParty.keys():
+    # 对于每一个团员的二级单位进行处理 - for each lv2 of group
+    for lv2 in sht1WithLvGroup.keys():
         if lv2 not in sumSht1WithLv.keys():
-            sumSht1WithLv.update({lv2: sht1WithLvParty[lv2]})
+            sumSht1WithLv.update({lv2: sht1WithLvGroup[lv2]})
             continue
-        # 对于每一个党员的三级单位进行处理 - for each lv3 of party
-        for lv3 in sht1WithLvParty[lv2].keys():
+        # 对于每一个团员的三级单位进行处理 - for each lv3 of group
+        for lv3 in sht1WithLvGroup[lv2].keys():
             if lv3 not in sumSht1WithLv[lv2].keys():
-                sumSht1WithLv[lv2].update({lv3: sht1WithLvParty[lv2][lv3]})
+                sumSht1WithLv[lv2].update({lv3: sht1WithLvGroup[lv2][lv3]})
                 continue
             # 如果有相同lv3 -  if lv3 is same
-            sumSht1WithLv[lv2][lv3] += sht1WithLvParty[lv2][lv3]
+            sumSht1WithLv[lv2][lv3] += sht1WithLvGroup[lv2][lv3]
     return sumSht1WithLv
 
 
@@ -85,70 +85,70 @@ def getMappingIndex(question, questLst):
     # 方式1， 如果questLst中有全量的question，则返回对应的scoreLst中的值
     # index = questLst.index(question)
     # 方式2， 如果仅有部分question，则需要遍历，返回对应的scoreLst中的值
-    for partyQuest in questLst:
-        if partyQuest is None:
+    for groupQuest in questLst:
+        if groupQuest is None:
             continue
-        if question in partyQuest:  # 若quest 一致
-            index = questLst.index(partyQuest)
+        if question in groupQuest:  # 若quest 一致
+            index = questLst.index(groupQuest)
             break
     return index
 
 
-def saveRawQuestLst(questLst, peopleQuestLst, partyQuestLst, debug, debugPath, pathPre):
+def saveRawQuestLst(questLst, peopleQuestLst, groupQuestLst, debug, debugPath, pathPre):
     """
     保存原始的问卷顺序 便于调试
     :param questLst:
     :param peopleQuestLst:
-    :param partyQuestLst:
+    :param groupQuestLst:
     :param debug:
     :param debugPath:
     :param pathPre:
     :return:
     """
     # 转置保存三个列表到csv中 - save three lists to csv vertically -
-    rawLst = [questLst, peopleQuestLst, partyQuestLst]
+    rawLst = [questLst, peopleQuestLst, groupQuestLst]
     # 对齐长度 - align length
-    maxLen = max(len(questLst), len(peopleQuestLst), len(partyQuestLst))
+    maxLen = max(len(questLst), len(peopleQuestLst), len(groupQuestLst))
     for i in range(len(rawLst)):
         if len(rawLst[i]) < maxLen:
             rawLst[i] += [None] * (maxLen - len(rawLst[i]))
     # 转置 - transpose
     rawLst = list(map(list, zip(*rawLst)))
-    saveDebugFile(["结果表问题列", "群众问题列表", "党员问题列表"],
+    saveDebugFile(["结果表问题列", "群众问题列表", "团员问题列表"],
                   rawLst,
                   debug, debugPath, pathPre)
 
 
-def sortDebug(questLst, peopleOrderLst, partyOrderLst, partyQuestLst, peopleQuestLst, debugPath, debug=True):
+def sortDebug(questLst, peopleOrderLst, groupOrderLst, groupQuestLst, peopleQuestLst, debugPath, debug=True):
     """
     用于调试排序
     题目:19 11.【不定项选择题		19.【单选题】您所
     :param questLst:
-    :param partyQuestLst:
+    :param groupQuestLst:
     :param peopleQuestLst:
     :param debug:
-    :param partyOrderLst:
+    :param groupOrderLst:
     :param peopleOrderLst:
     :return:
     """
     if not debug:
         return
     notFoundSign = "—————未找到—————"
-    print("\t\t people \tparty对应问题顺序:")
+    print("\t\t people \tgroup对应问题顺序:")
     n = 0
     saveData = []
-    for index1, index2 in zip(peopleOrderLst, partyOrderLst):
+    for index1, index2 in zip(peopleOrderLst, groupOrderLst):
         questAns = questLst[n]
         peopleStr = peopleQuestLst[index1] if index1 != -1 else notFoundSign
-        partyStr = partyQuestLst[index2] if index2 != -1 else notFoundSign
+        groupStr = groupQuestLst[index2] if index2 != -1 else notFoundSign
         # questAns = questLst[n] if "不计分" not in questLst[n] else questLst[n][:6] + "(不计分)"
-        print(f"题目{n}:\t{questAns:<20}\t{peopleStr:<20}\t{partyStr:<20}")
+        print(f"题目{n}:\t{questAns:<20}\t{peopleStr:<20}\t{groupStr:<20}")
         n += 1
-        saveData.append([str(n), questAns, peopleStr, partyStr])
+        saveData.append([str(n), questAns, peopleStr, groupStr])
     # save SaveData to csv
-    saveDebugFile(["No.", "结果表问题", "群众问题", "党员问题"],
+    saveDebugFile(["No.", "结果表问题", "群众问题", "团员问题"],
                   saveData, debug, debugPath, "题目对应参照表")
-    saveRawQuestLst(questLst, peopleQuestLst, partyQuestLst, debug, debugPath, "题目原始顺序表")
+    saveRawQuestLst(questLst, peopleQuestLst, groupQuestLst, debug, debugPath, "题目原始顺序表")
 
 
 def getQuestionLst(surSht):
@@ -170,7 +170,7 @@ class scoreJudgement:
         self.surveyQuesTypeCol = surveyQuesTypeCol  # "G"  # 题目类型列
         self.otherTitle = otherTitle
         self.testSurveySht = testSurveySht
-        self.app4Ans = xw.App(visible=True, add_book=False)  # 党员问卷表
+        self.app4Ans = xw.App(visible=True, add_book=False)  # 团员问卷表
         self.app4Ans.display_alerts = False
         self.app4Ans.api.CutCopyMode = False
 

@@ -23,21 +23,7 @@
 10. 局部变量的冲突
 
 
-import module
-import module as mod
-import module1, module2
-import module1 as m1, module2 as m2
-from module import name1 as n1, name2 as n2
-from module import *
-from module import (
-    name1,
-    name2,
-    name3,
-)
-from . import submodule
-from ..subpackage import submodule
-# 动态导入
-mod = __import__("module")
+
 
 5. 处理encoding语句，如果有的话，应该在最前面。
 

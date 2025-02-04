@@ -4,6 +4,12 @@
 # Time: 19:18
 
 def colorPrint(*args, **kwargs):
+    """Prints the given arguments in color.
+
+    Args:
+        *args: The arguments to print.
+        **kwargs: The keyword arguments to pass to the print function.
+    """
     colorDict = {
         'black': 30,
         'red': 31,
@@ -21,12 +27,6 @@ def colorPrint(*args, **kwargs):
         'purpleBG': 45,
         'cyanBG': 46,
     }
-    """Prints the given arguments in color.
-
-    Args:
-        *args: The arguments to print.
-        **kwargs: The keyword arguments to pass to the print function.
-    """
     # Get the color from the keyword arguments.
     colorStr = kwargs.pop("color", None)
     colorCode = colorDict.get(colorStr, None)

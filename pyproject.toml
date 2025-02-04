@@ -1,13 +1,13 @@
 name = "pyCombiner"
-version = "0.1.6"
+version = "1.0.0"
 description = "Combine that all your python files in your project sequential into one by the relationship of import satement."
 
 license='BSD License'
 authors = [
-    "JunQingQing <gwills@163.com>",
+    "KissesJun <realgwills@gmail.com>",
 ]
 maintainers = [
-    "JunQingQing <gwills@163.com>",
+    "KissesJun <realgwills@gmail.com>",
 ]
 readme='readme.md'
 homepage = "https://gwills163.github.io/"

@@ -1,9 +1,12 @@
-import time
-import os
+# 5
 # 1
 
 welcomeBanner = "Welcome use Version 1.0.0"
+# 4
+# 3
 # 2
+import time,os
+import time,os
 
 
 def isLoginValid(userInfo, adminPass):
@@ -40,7 +43,6 @@ def showPasswordPrompt():
 def inputSign():
     colorPrint("green", ">>>", end=" ")
     return input()
-# 3
 
 
 def getName():
@@ -68,7 +70,6 @@ def showBanner(bannerStr):
     :return:
     """
     colorPrint("cyan", bannerStr)
-# 4
 
 
 def main(welcomeBanner):
@@ -86,7 +87,6 @@ def main(welcomeBanner):
         colorPrint("green", "Login Success")
     else:
         colorPrint("red", "Login Failed")
-# 5
 
 # CN: 只是一个demo
 # EN: Just a demo_complicate

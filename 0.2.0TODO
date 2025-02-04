@@ -1,29 +1,47 @@
-删除输出提示的
- forWorking/HuayunTechRPA/Beijing_ExlGenerate_2022-8-18/realTest.py
-  -  -  -  -  -  -  -  -  -  -
++++++删除输出提示的
++++forWorking/HuayunTechRPA/Beijing_ExlGenerate_2022-8-18/realTest.py
++++ -  -  -  -  -  -  -  -  -  -
 
-更改输出的文件名不是 相对路径
-The output file is: .\CombineOutput\realTest20221209_125032.py
-而是绝对路径
-The output file is: D:\forWorking\HuayunTechRPA\Beijing_ExlGenerate_2022-8-18\CombineOutput\realTest20221209_125032.py
+++更改输出的文件名不是 相对路径
+++The output file is: .\CombineOutput\realTest20221209_125032.py
+++而是绝对路径
+++The output file is: D:\forWorking\HuayunTechRPA\Beijing_ExlGenerate_2022-8-18\CombineOutput\realTest20221209_125032.py
 
-3. 处理__name__ == __main__语句
+++ 3. 处理__name__ == __main__语句
 
-4. 处理中间的import语句，导入后应该在原位。
-建议默认执行保持现在的方式，同时可以设置 -o OriginLine 选项，保持原来的位置。
-2023-1-6
+-- 4. 处理中间的import语句，导入后应该在原位。
+-- 建议默认执行保持现在的位置，同时可以设置 -o OriginLine 选项，保持原来的位置。
+-- 2023-1-6
+
+
++++ 7. 添加分支结构 树形图， 标出原始文件和输出文件
+
++++ 8. 输出的里面可以根据 DEBUG需要， 展示出原文的分界线
+
++++ 9. 指定输出文件夹
+
+10. 局部变量的冲突
+
+
+import module
+import module as mod
+import module1, module2
+import module1 as m1, module2 as m2
+from module import name1 as n1, name2 as n2
+from module import *
+from module import (
+    name1,
+    name2,
+    name3,
+)
+from . import submodule
+from ..subpackage import submodule
+# 动态导入
+mod = __import__("module")
 
 5. 处理encoding语句，如果有的话，应该在最前面。
 
 
 6. 未解析的应该标红
-
-7. 添加分支结构 树形图， 标出原始文件和输出文件
-
-8. 输出的里面可以根据 DEBUG需要， 展示出原文的分界线
-
-9. 指定输出文件夹
-
-
 终极目标：
 精简版：  导入时，仅导入相关代码

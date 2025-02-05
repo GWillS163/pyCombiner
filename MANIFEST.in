@@ -1,2 +1,6 @@
 recursive-include fastproject res
 include readme.md
+recursive-include tests/examples *
+recursive-include tests/examples_refer_result *
+
+

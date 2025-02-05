@@ -14,18 +14,21 @@ setup(
         description
     ),
     include_dirs=[
-        'tests/examples',
-        'tests/examples_refer_result',
+        'pyCombiner/'
     ],
+    package_data={
+        'pyCombiner': ['tests/examples/*', 'tests/examples_refer_result/*'],
+    },
+    packages=find_packages(),
     include_package_data=True,
-    long_description=open('readme.md').read(),
+
+    long_description=open('readme.md', encoding='utf-8').read(),
     long_description_content_type='text/markdown',
     author='KissesJun',
     author_email='realgwills@gmail.com',
     maintainer='KissesJun',
     maintainer_email='realgwills@gmail.com',
     license='BSD License',
-    packages=find_packages(),
     platforms=["all"],
     url='https://gwills163.github.io/',
     classifiers=[

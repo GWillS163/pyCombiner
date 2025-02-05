@@ -86,6 +86,19 @@ def validate_paths(args, parser):
     """
     # 检查起始文件路径是否存在
     if not os.path.isfile(args.start_file):
+        print("For Example: ", end="\n")
+        colorPrint("pyCombiner", color="greenBG", end="")
+        print(" ", end="")
+        colorPrint("pyCombiner/main.py", color="cyanBG", end="")
+        print("", end="")
+        colorPrint(" -s output_dir", color="green", end="")
+        print("")
+
+        colorPrint("pyCombiner", color="greenBG", end="")
+        print(" ", end="")
+        colorPrint("[Required: <entry_file>]", color="cyanBG", end="")
+        colorPrint(" [Optional: -s <save_dir>]", color="green", end="")
+        colorPrint(" [Optional: -p <project_dir>]", color="green", end="\n")
         sys.exit(LANGUAGES[LANG]["start_file_error"].format(path=args.start_file))
 
     # 获取起始文件所在目录

@@ -1,0 +1,34 @@
+
+--
+## 📅 Packaging & Publishing | 打包上传 PyPI | PyPI公開
+
+### 1. Build Package
+
+```bash
+python setup.py sdist build
+```
+
+Or:
+
+```bash
+python3 setup.py sdist bdist_wheel
+```
+
+### 2. Install Required Tools
+
+```bash
+pip install --upgrade setuptools wheel twine
+```
+
+### 3. Upload to PyPI
+
+```bash
+twine upload dist/*
+```
+
+### 4. Test Installation
+
+```bash
+pip install your-package-name
+```
+

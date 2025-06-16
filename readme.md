@@ -36,7 +36,7 @@
 **Demo Project**:
 `examples/demo_complicate`
 
-![demo image](https://github.com/GWillS163/pyCombiner/raw/master/res/introImg.png)
+![demo image](https://github.com/KissesJun/pyCombiner/raw/master/res/introImg.png)
 
 ---
 
@@ -55,7 +55,7 @@ You can try `pyCombiner` using the built-in demo project:
 **Step 1: Clone the demo project**
 
 ```bash
-git clone https://github.com/GWillS163/pyCombiner.git
+git clone https://github.com/KissesJun/pyCombiner.git
 cd pyCombiner/tests/examples/deep_demo
 ```
 
@@ -110,5 +110,5 @@ d-----        2025/06/02     17:23                subdir
 
 ## ✨ Credits & License
 
-* Created by [GWillS163](https://github.com/GWillS163)
+* Created by [KissesJun](https://github.com/KissesJun)
 * Open source under [MIT License](LICENSE)

@@ -6,18 +6,23 @@
 # Time: 17:53
 
 from setuptools import setup, find_packages
-from pyCombiner import version, description
+import tomli
+
+def _get_version():
+    with open("pyproject.toml", "rb") as f:
+        return tomli.load(f)["version"]
+
 setup(
-    name='pyCombiner',
-    version=version,
+    name='pycombiner',
+    version=_get_version(),
     description=(
-        description
+        "Combine that all your python files in your project sequential into one by the relationship of import satement."
     ),
     include_dirs=[
-        'pyCombiner/'
+        'pycombiner/'
     ],
     package_data={
-        'pyCombiner': ['tests/examples/*', 'tests/examples_refer_result/*'],
+        'pycombiner': ['tests/examples/*', 'tests/examples_refer_result/*'],
     },
     packages=find_packages(),
     include_package_data=True,
@@ -25,12 +30,12 @@ setup(
     long_description=open('readme.md', encoding='utf-8').read(),
     long_description_content_type='text/markdown',
     author='KissesJun',
-    author_email='realgwills@gmail.com',
+    author_email='meng.junqing1022@gmail.com',
     maintainer='KissesJun',
-    maintainer_email='realgwills@gmail.com',
+    maintainer_email='meng.junqing1022@gmail.com',
     license='BSD License',
     platforms=["all"],
-    url='https://gwills163.github.io/',
+    url='https://kissesJun.github.io/',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Operating System :: OS Independent',
@@ -49,6 +54,6 @@ setup(
     # scripts=['bin/main'],
     entry_points={
         # 'console_scripts': ['pyCombiner=pyCombiner.command_line:main'],
-        'console_scripts': ['pyCombiner=pyCombiner.__main__:run'],
+        'console_scripts': ['pycombiner=pycombiner.__main__:run'],
     }
 )

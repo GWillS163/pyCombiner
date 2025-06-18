@@ -1,14 +1,32 @@
-# Github: GWillS163
-# User: 駿清清 
-# Date: 01/11/2022 
-# Time: 20:53
+"""
+pycombiner - A tool for combining Python files
+"""
 
-def main():
-    return "hello"
+import os
+from pathlib import Path
 
+def _get_version():
+    """Get version from pyproject.toml"""
+    try:
+        # Get the directory containing this file
+        package_dir = Path(__file__).parent.parent
+        pyproject_path = package_dir / "pyproject.toml"
+        
+        if not pyproject_path.exists():
+            # If not found in parent directory, try the current directory
+            pyproject_path = Path("pyproject.toml")
+            
+        if not pyproject_path.exists():
+            return "0.0.0"  # Fallback version
+            
+        with open(pyproject_path, "rb") as f:
+            import tomli
+            return tomli.load(f)["project"]["version"]
+    except Exception:
+        return "0.0.0"  # Fallback version
 
-version = "1.0.1"
-description = "Combine that all your python files " \
-              "in your project sequential " \
-              "into one by the relationship of import " \
-              "statement. "
+__version__ = _get_version()
+
+from .combiner import PyCombiner
+
+__all__ = ["PyCombiner"] 
